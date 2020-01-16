@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { graphql } from "gatsby"
+import React, { Fragment, useState, useEffect, useRef  } from 'react';
+import { graphql, useStaticQuery } from "gatsby"
 //import ProTip from '../src/ProTip';
 //import Link from '../src/Link';
 //import { withAuthSync, logout } from '../utils/auth';
@@ -40,8 +40,67 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Index(props) {
+  
+  let [delay, setDelay] = useState(1000);
+  
+  function handleDelayChange(e) {
+    setDelay(Number(e.target.value));
+  }
 
-  console.log(props);
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+    useEffect(() => {
+    })
+      useInterval(() => {
+        async function GetLCMData(){
+          let response = await fetch(`http://dev-metaspf401.sunpowercorp.com:8080/api/metadash/lcm`);
+
+          if(response.status === 200){
+            let data = await response.json();
+            console.log(data.lcm17);
+            setLcm17(data.lcm17)
+            setLcm1718(data.lcm1718)
+            setLcm18(data.lcm18)
+            setLcm19(data.lcm19)
+            setLcm1920(data.lcm1920)
+            setLcm20(data.lcm20)
+            setLcm21(data.lcm21)
+            setLcm22(data.lcm22)
+            setLcm222(data.lcm222)
+          }
+        }
+        GetLCMData();
+      }, delay)
+  
+      const classes = useStyles();
+      const [ lcm17, setLcm17 ] = useState([]);
+      const [ lcm18, setLcm18 ] = useState([]);
+      const [ lcm19, setLcm19 ] = useState([]);
+      const [ lcm20, setLcm20 ] = useState([]);
+      const [ lcm21, setLcm21 ] = useState([]);
+      const [ lcm22, setLcm22 ] = useState([]);
+      const [ lcm1718, setLcm1718 ] = useState([]);
+      const [ lcm1920, setLcm1920 ] = useState([]);
+      const [ lcm222, setLcm222 ] = useState([]);
+      const [ backdrop, setBackdrop ] = useState(false);
+
   /**
     allPlatterInnolas2005LcmL17L18Csv: {edges: Array(23)}
     allPlatterInnolas2006LcmL19L20Csv: {edges: Array(23)}
@@ -52,19 +111,6 @@ function Index(props) {
     allPlatterInnolas4022LcmL20Csv: {edges: Array(23)}
     allPlatterInnolas4023LcmL21Csv: {edges: Array(23)}
     allPlatterInnolas4024LcmL22Csv: {edges: Array(23)}
-   */
-  
-  const classes = useStyles();
-  const [ lcm17, setLcm17 ] = useState([]);
-  const [ lcm18, setLcm18 ] = useState([]);
-  const [ lcm19, setLcm19 ] = useState([]);
-  const [ lcm20, setLcm20 ] = useState([]);
-  const [ lcm21, setLcm21 ] = useState([]);
-  const [ lcm22, setLcm22 ] = useState([]);
-  const [ lcm1718, setLcm1718 ] = useState([]);
-  const [ lcm1920, setLcm1920 ] = useState([]);
-  const [ lcm222, setLcm222 ] = useState([]);
-  const [ backdrop, setBackdrop ] = useState(false);
 
   useEffect(() => {
     if(typeof props.data.allPlatterInnolas4019LcmL17Csv.edges !== 'undefined' && props.data.allPlatterInnolas4019LcmL17Csv.edges !== null && props.data.allPlatterInnolas4019LcmL17Csv.edges.length > 0){
@@ -150,6 +196,7 @@ function Index(props) {
   console.log(lcm1920);
   console.log(lcm222);
 
+   */
   return (
     <Fragment>
       <Backdrop
@@ -160,6 +207,7 @@ function Index(props) {
       </Backdrop>
       <Layout lcm17={lcm17} />
       <Container maxWidth="xl" >
+        <input value={delay} onChange={handleDelayChange} />
         <Grid container spacing={2} justify="center">
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
@@ -168,17 +216,17 @@ function Index(props) {
               </Typography>
             {
               lcm17.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -195,17 +243,17 @@ function Index(props) {
               </Typography>
             {
               lcm1718.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -222,17 +270,17 @@ function Index(props) {
               </Typography>
             {
               lcm18.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -249,17 +297,17 @@ function Index(props) {
               </Typography>
             {
               lcm19.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -276,17 +324,17 @@ function Index(props) {
               </Typography>
             {
               lcm1920.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -303,17 +351,17 @@ function Index(props) {
               </Typography>
             {
               lcm20.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -330,17 +378,17 @@ function Index(props) {
               </Typography>
             {
               lcm21.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -357,17 +405,17 @@ function Index(props) {
               </Typography>
             {
               lcm22.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -384,17 +432,17 @@ function Index(props) {
               </Typography>
             {
               lcm222.map(data => (
-                data.node.Code !== 'OK' ?
+                data.Code !== 'OK' ?
                   <Fragment>
-                    <Paper className={classes.paper} style={{backgroundColor:`${data.node.Code}`}}>
+                    <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.node.Tool}
+                        {data.Tool}
                         <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
-                          {data.node._FAIL}/{data.node.Limit}
+                          {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
                       <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar', fontWeight: 500}}>
-                        {data.node.UL_LL} • {data.node.n}
+                        {data['UL/LL']} • {data.n}
                       </Typography>
                     </Paper>
                   </Fragment>
@@ -412,142 +460,3 @@ function Index(props) {
 
 
 export default Index;
-export const IndexQuery = graphql`
-  query {
-    allPlatterInnolas2005LcmL17L18Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas2006LcmL19L20Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas3012LcmL222Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4019LcmL17Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4020LcmL18Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4021LcmL19Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4022LcmL20Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4023LcmL21Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-    allPlatterInnolas4024LcmL22Csv {
-      edges {
-        node {
-          Tool
-          _FAIL
-          Limit
-          UL_LL
-          Code
-          n
-          TimeStamp
-          _FAIL_UL
-          _FAIL_LL
-        }
-      }
-    }
-  }
-`
