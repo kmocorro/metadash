@@ -16,8 +16,8 @@
     "react-helmet": "latest"
   },
   "scripts": {
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -p 8080",
     "build": "gatsby build",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve -p 9090"
   }
 }
