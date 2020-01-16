@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 function Index(props) {
   
-  let [delay, setDelay] = useState(1000);
+  let [delay, setDelay] = useState(10000);
   
   function handleDelayChange(e) {
     setDelay(Number(e.target.value));
@@ -205,9 +205,8 @@ function Index(props) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Layout lcm17={lcm17} />
+      <Layout />
       <Container maxWidth="xl" >
-        <input value={delay} onChange={handleDelayChange} />
         <Grid container spacing={2} justify="center">
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
