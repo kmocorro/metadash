@@ -64,6 +64,7 @@ function Index(props) {
       if(response.status === 200){
 
         let data = await response.json();
+        console.log(data.lcm17)
         setLcm17(data.lcm17)
         setLcm1718(data.lcm1718)
         setLcm18(data.lcm18)
@@ -115,13 +116,26 @@ function Index(props) {
         <Grid container spacing={2} justify="left">
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L17
-              </Typography>
+              {
+                lcm17.length > 0 ?
+                  lcm17.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L17
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm17.length > 0 ?
                 lcm17.map(data => (
-                  data.Code !== 'OK' ?
+                  data.Code !== 'OK' && data.Code !== 'HEADER' ?
                     <Fragment>
                       <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                         <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -145,13 +159,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L17L18
-              </Typography>
+              {
+                lcm1718.length > 0 ?
+                  lcm1718.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L17L18
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm1718.length > 0 ?
               lcm1718.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -175,13 +202,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L18
-              </Typography>
+              {
+                lcm18.length > 0 ?
+                  lcm18.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L18
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm18.length > 0 ?
               lcm18.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -205,13 +245,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L19
-              </Typography>
+              {
+                lcm19.length > 0 ?
+                  lcm19.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L19
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm19.length > 0 ?
               lcm19.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -235,13 +288,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L19L20
-              </Typography>
+              {
+                lcm1920.length > 0 ?
+                  lcm1920.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L19L20
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm1920.length > 0 ?
               lcm1920.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -265,13 +331,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM20
-              </Typography>
+              {
+                lcm20.length > 0 ?
+                  lcm20.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L20
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm20.length > 0 ?
               lcm20.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -295,13 +374,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L21
-              </Typography>
+              {
+                lcm21.length > 0 ?
+                  lcm21.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L21
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm21.length > 0 ?
               lcm21.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -325,13 +417,26 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L22
-              </Typography>
+              {
+                lcm22.length > 0 ?
+                  lcm22.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L22
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm22.length > 0 ?
               lcm22.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
@@ -355,18 +460,31 @@ function Index(props) {
           </Grid>
           <Grid item xs={12} sm={12} md={2} lg={2}>
             <Paper className={classes.mainPaper}>
-              <Typography color="primary" variant="h5" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
-                LCM L22-2
-              </Typography>
+              {
+                lcm222.length > 0 ?
+                  lcm222.map(data => (
+                    data.Code === 'HEADER' ?
+                      <Fragment>
+                        <Typography color="primary" variant="h6"  align="left" style={{fontFamily: 'Roboto Condensed'}} gutterBottom>
+                          LCM L22-2
+                        </Typography>
+                        <Typography color="primary"  variant="caption" align="right">
+                          {data.Limit}
+                        </Typography>
+                      </Fragment>
+                    : <></>
+                  ))
+                : <></>
+              }
             {
               lcm222.length > 0 ?
               lcm222.map(data => (
-                data.Code !== 'OK' ?
+                data.Code !== 'OK' && data.Code !== 'HEADER' ?
                   <Fragment>
                     <Paper className={classes.paper} style={{backgroundColor:`${data.Code}`}}>
                       <Typography color="primary" variant="h6" style={{fontFamily: 'Roboto Condensed'}}>
-                        {data.Tool}
-                        <Typography color="primary" variant="overline" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
+                          {data.Tool}
+                        <Typography color="primary" variant="body1" style={{fontFamily: 'Eczar'}} style={{float: 'right'}}>
                           {data['#FAIL']}/{data.Limit}
                         </Typography>
                       </Typography>
